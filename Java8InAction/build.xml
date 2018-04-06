@@ -1,0 +1,56 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property environment="env"/>
+	<path id="local-classpath">
+	  <fileset dir="lib">
+	    <include name="*.jar"/>
+	  </fileset>
+	</path>
+	<path id="build-classpath">
+		<fileset dir="build/jar">
+		   <include name="*.jar"/>
+		</fileset>
+	</path>
+	<taskdef resource="org/apache/ivy/ant/antlib.xml">
+	    <classpath>
+	        <fileset dir="lib">
+	            <include name="*.jar"/>
+	        </fileset>
+	    </classpath>
+	</taskdef>
+	<target name="resolve" description="--> retrieve dependencies with ivy">
+	    <ivy:retrieve />
+	</target>
+	
+	<target name="doc" description="generate documentation">
+	    <javadoc sourcepath="src" destdir="doc" >
+	    	<classpath refid="local-classpath"/>
+	    </javadoc>
+	</target>
+	
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile" depends="resolve,doc" >
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes">
+    		<classpath refid="local-classpath"/>
+    	</javac>
+    </target>
+
+    <target name="jar">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/lambdascination.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="lambdasinaction.chap1.FilteringApples"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run">
+        <java jar="build/jar/lambdascination.jar" fork="true">
+        	<classpath refid="build-classpath"/>
+    	</java>
+    </target>
+
+</project>
