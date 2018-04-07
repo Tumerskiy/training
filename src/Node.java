@@ -19,13 +19,15 @@ public class Node {
                 return "Yes";
             }
         }
+        checkedNodes.add(this);
         for (Node node : outgoing){
-            checkedNodes.add(this);
             result =  node.checkLock(checkedNodes);
+
             if (result.equals("Yes")){
                 break;
             }
         }
+        checkedNodes.remove(this);
         return result;
     }
 }

@@ -32,7 +32,6 @@ public class GameOL {
 
     public static void cycle(ArrayList<Cell> BusyCells, ArrayList<Cell> EmptyCells){
         ArrayList<Cell> removelist = new ArrayList<>();
-        ArrayList<Cell> addlist = new ArrayList<>();
 
         for (Cell cell: BusyCells){
             if (cell.getNeightbors()<=1||cell.getNeightbors()>=4){
